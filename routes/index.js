@@ -12,6 +12,7 @@ const homeController=require('../controllers/home_controller');
 router.get('/',homeController.home);
 //putting the middleware to transfer the /users request
 router.use('/users',require('./users.js'));
+router.use('/posts',require('./posts'));
 
 //exporting router config to all files so that index.js can use it
 module.exports=router;

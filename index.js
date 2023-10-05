@@ -6,8 +6,17 @@ const port=8000;
 //creating the instance of the express
 const app=express();
 
+//importing the express-ejs-layout
+const  expressLayouts=require('express-ejs-layouts');
+//tell express that we have a layout and views to be filled in there
+app.use(expressLayouts);
+
 //Putting the middleware to transfer the request to the routes/index.js
 app.use('/',require('./routes/index')); //('.routes) automatically fetches the index.js
+
+//setting up the views
+app.set('view engine','ejs');
+app.set('views','./views');
 
 //firing up the server
 app.listen(port, function(err){
