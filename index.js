@@ -6,6 +6,9 @@ const port=8000;
 //creating the instance of the express
 const app=express();
 
+//importing the mongoDB settings
+const db=require('./config/mongoose');
+
 //importing the express-ejs-layout
 const  expressLayouts=require('express-ejs-layouts');
 //tell express that we have a layout and views to be filled in there
