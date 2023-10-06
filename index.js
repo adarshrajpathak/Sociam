@@ -10,6 +10,12 @@ const app=express();
 const  expressLayouts=require('express-ejs-layouts');
 //tell express that we have a layout and views to be filled in there
 app.use(expressLayouts);
+//extract sytle and script from sub page into the layout
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
+
+//serving the static files using the app.use middleware
+app.use(express.static('./assets'));
 
 //Putting the middleware to transfer the request to the routes/index.js
 app.use('/',require('./routes/index')); //('.routes) automatically fetches the index.js
