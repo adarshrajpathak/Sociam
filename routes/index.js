@@ -10,8 +10,10 @@ const homeController=require('../controllers/home_controller');
 
 //for the root level routes
 router.get('/',homeController.home);
-//putting the middleware to transfer the /users request
-router.use('/users',require('./users.js'));
+//putting the middleware to transfer the /xyz request
+// router.use('/login',require('./login'));
+// router.use('/signup',require('./signup'));
+router.use('/user',require('./user'));
 router.use('/posts',require('./posts'));
 
 //exporting router config to all files so that index.js can use it

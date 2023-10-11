@@ -2,6 +2,10 @@
 const express=require('express');
 //asssinging the port number
 const port=8000;
+//importing body-parser for decoding the form payload(POST data)
+const bodyParser=require('body-parser');
+//importing cookie-parser for using cookie
+const cookieParser=require('cookie-parser');
 
 //creating the instance of the express
 const app=express();
@@ -16,6 +20,11 @@ app.use(expressLayouts);
 //extract sytle and script from sub page into the layout
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
+
+//using the body-parser
+app.use(bodyParser.urlencoded({extended:false}));
+//using the cookie-parser
+app.use(cookieParser());
 
 //serving the static files using the app.use middleware
 app.use(express.static('./assets'));

@@ -1,0 +1,36 @@
+<link rel="stylesheet" type="text/css" href="/css/login.css">
+<div class="container2">
+    <div class="image-section">
+        <div class="logo">
+            <img src="/images/Sociam-logos_transparent.png" alt="Sociam-logo" height="500px" width="500px">
+        </div>
+        <!-- <p class="tag-line">Where Conversation Create Connections!!</p> -->
+    </div>
+    <div class="form-section">
+        <div>
+            <p class="login-title">Login</p>
+            <p class="greeting">Good to see you again</p>
+        </div>
+        <div class="form-container">
+            <form action="/user/create-session" method="POST">
+                <div class="email">
+                    <label for="email">Email</label>
+                    <div>
+                        <input type="text" placeholder="Enter Your Email" name="email" id="email" value="">
+                    </div>
+                </div>
+                <div class="password">
+                    <label for="password">Password</label>
+                    <div>
+                        <input type="password" placeholder="Enter Password" name="password" id="password" value="">
+                    </div>
+                </div>
+                <div class="submit-button">
+                    <button class="submit-btn primary-btn" type="submit">Login</button>
+                    <p class="action-txt">Login as guest</p>
+                    <a class="action-txt" href="/user/signup">Create account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

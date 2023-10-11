@@ -1,0 +1,48 @@
+<link rel="stylesheet" type="text/css" href="/css/signup.css">
+<div class="container2">
+    <div class="image-section">
+        <div class="logo">
+            <img src="/images/Sociam-logos_transparent.png" alt="Sociam-logo" height="500px" width="500px">
+        </div>
+        <!-- <p class="tag-line">Where Conversation Create Connections!!</p> -->
+    </div>
+    <div class="form-section">
+        <div>
+            <p class="login-title">Signup</p>
+            <p class="greeting">Create Your Sociam Account</p>
+        </div>
+        <div class="form-container">
+            <form action="/user/create" method="POST">
+                <div class="name">
+                    <label for="name">Name</label>
+                    <div>
+                        <input type="name" placeholder="Enter Your Name" name="name" value="" required>
+                    </div>
+                </div>
+                <div class="email">
+                    <label for="email">Email</label>
+                    <div>
+                        <input type="text" placeholder="Enter Your Email" name="email" value="" required>
+                    </div>
+                </div>
+                <div class="password">
+                    <label for="password">Password</label>
+                    <div>
+                        <input type="password" placeholder="Enter Your Password" name="password" value="" required>
+                    </div>
+                </div>
+                <div class="password">
+                    <label for="confirm-password">Confirm Password</label>
+                    <div>
+                        <input type="password" placeholder="Confirm Your Password" name="confirmPassword" value="" required>
+                    </div>
+                </div>
+                <div class="submit-button">
+                    <button class="submit-btn primary-btn" type="submit">Login</button>
+                    <p class="action-txt">Login as guest</p>
+                    <a class="action-txt" href="/user/login">Already have account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
