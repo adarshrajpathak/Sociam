@@ -73,5 +73,17 @@ module.exports.create=function(req,res){
 }
 //create the session
 module.exports.createSession=function(req,res){
-    //TODO
+    //when the authentication done
+    return res.redirect('/user/profile');
+}
+
+//signout action
+module.exports.signout=function(req,res){
+    //logout
+    req.logout(function(err){
+        if(err){
+            console.log(`Error in loggin out: ${err}`);
+        }
+        res.redirect('/');
+    });
 }

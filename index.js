@@ -12,9 +12,17 @@ const app=express();
 
 //importing the mongoDB settings
 const db=require('./config/mongoose');
+//importing the session (encrypting the session cookie)
+const session=require('express-session');
+//importing passport and passport-startegy for the authentication use
+const passport=require('passport');
+const passportLocal=require('./config/passport-local-strategy');
+//importing the connect-mongo for persistent session cookie [mongo-store]
+const MongoStore=require('connect-mongo');
 
 //importing the express-ejs-layout
 const  expressLayouts=require('express-ejs-layouts');
+// const { name } = require('ejs');
 //tell express that we have a layout and views to be filled in there
 app.use(expressLayouts);
 //extract sytle and script from sub page into the layout
@@ -29,12 +37,32 @@ app.use(cookieParser());
 //serving the static files using the app.use middleware
 app.use(express.static('./assets'));
 
-//Putting the middleware to transfer the request to the routes/index.js
-app.use('/',require('./routes/index')); //('.routes) automatically fetches the index.js
 
 //setting up the views
 app.set('view engine','ejs');
 app.set('views','./views');
+
+//add middleware that takes session cookie and encrypt it
+app.use(session({
+    //properties to be set
+    name:'Sociam',
+    secret:'ItIsAKeyToEncrptAndDecrypt',    //TODO i.e., change secret before deployment in the production
+    saveUnintialized:false,
+    resave:false,
+    cookie:{
+        //age to cookie how long it is valid
+        maxAge:(1000*60*1000)
+    },
+    store:MongoStore.create(db)
+}));
+//along-side using passport for authentication and maintaining session
+app.use(passport.initialize());
+app.use(passport.session());    //inbuild function of passport
+//just establish/set the user(who is visiting)
+app.use(passport.setAuthenticatedUser);
+
+//Putting the middleware to transfer the request to the routes/index.js
+app.use('/',require('./routes/index')); //('.routes) automatically fetches the index.js
 
 //firing up the server
 app.listen(port, function(err){
