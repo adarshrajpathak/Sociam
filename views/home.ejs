@@ -1,21 +1,42 @@
 <link rel="stylesheet" type="text/css" href="/css/home.css">
 <main>
     <h2>Welcome to the HOME Page!!</h1>
+    <div id="container-body">
+        <section id="feed-posts">
+            <!-- feature available when user is signed in -->
+            <div>
+                <% if (locals.user){ %>
+                    <form action="/posts/create" id="new-post-form" method="POST">
+                        <textarea name="content" cols="30" rows="3" placeholder="What's in your mind?" required></textarea>
+                        <input type="submit" value="post">
+                    </form>
+                <% } %>
+            </div>
+            <div id="post-list-section">
+                <ul type="none">
+                    <% for(post of posts){ %>
+                        <div class="post-container">
+                            <ul type="none">
+                                <%- include('_posts.ejs') -%>
+                            </ul>               
+                        </div>
+                    <%}%>
+                </ul>
+            </div>
+        </section>
+    
+        <!-- section for the Friends -->
+        <section id="friends-suggestion">
+            <div id="container-friends">
+                <h4>Friends</h4>
+                <% for(u of all_users) { %>
+                    <p>
+                        <a href="/user/profile/<%=u.id%>"><%=u.name%></a>
+                    </p>
+                <% } %>
+            </div>
+        </section>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="/js/home_posts.js" ></script>
+    </div>
 </main>
-
-    <!-- with partials we have to to this
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sociam</title>
-    </head>
-    <body>
-        <%- include('_header') -%>
-        <main>
-            <h2>Welcome to the HOME Page!!</h1>
-        </main>
-        <%-include('_footer')-%>
-    </body>
-    </html> -->

@@ -1,10 +1,21 @@
 <link rel="stylesheet" type="text/css" href="/css/profile.css">
+<link rel="stylesheet" type="text/css" href="/css/new.css">
 <main>
     <h2>This is the Profile page</h1>
         <ul type="none">
-            <li>Name: <%= user.name %></li>
-            <li>Email: <%= user.email %></li>
-            <li>Password:<%= user.password %></li>
+            <!-- User Id and Profile Id are same so updation allowed -->
+            <% if(locals.user.id==locals.profile_user.id){%>
+                <form action="/user/update/<%=profile_user.id%>" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" value="<%=profile_user.name%>" required>
+                    <input type="email" name="email" placeholder="Your Email" value="<%=profile_user.email%>" required>
+                    <input type="submit" value="Update">
+                </form>
+            <% }else{ %>
+                <!-- else show only the profile info -->
+                <li>Name: <%= profile_user.name %></li>
+                <li>Email: <%= profile_user.email %></li>
+                <!-- <li>Password:<%= profile_user.password %></li> -->
+            <% } %>
         </ul>
 </main>
 

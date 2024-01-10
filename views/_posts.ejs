@@ -1,0 +1,33 @@
+<li id="post-<%= post.id%>">
+    <small>
+        <!-- feature available when user is signed in and user is post author -->
+        <% if(locals.user && locals.user.id==post.user.id){ %>
+            <a class="post-delete-button" href="/posts/destroy/ <%= post.id %>">X</a>
+        <% } %>
+    </small>
+    <%= post.content %>
+    <small>
+        <p>
+            <%= post.user.name %>
+        </p>
+    </small>
+    <hr>
+    <div id="post-<%=post.id%>-comments">
+        <!-- Comment functionality only available when User logged in -->
+        <% if (locals.user) { %>
+            <form action="/comments/create" class="new-comment-form" method="POST">
+                <input type="text" name="content" placeholder="write a comment..." required>
+                <input type="hidden" name="post" value="<%= post._id %>">
+                <input type="submit" value="Add Comment">
+            </form>
+        <% } %>
+        <div class="post-comment-list">
+            <ul type="none" id="">
+                <!-- Iterating over the comment (stored in the rough)-->
+                <% for (comment of post.comments){%>
+                    <%- include('_comments.ejs') -%>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</li>

@@ -8,7 +8,9 @@ const passport=require('passport');
 const userController=require('../controllers/user_controller');
 
 //for the profile level routes
-router.get('/profile', passport.checkAuthentication, userController.profile);
+router.get('/profile/:id', passport.checkAuthentication, userController.profile);
+//for the profile update
+router.post('/update/:id', passport.checkAuthentication, userController.update);
 
 router.get('/signup', passport.checkIsNotAuthenticated, userController.signup);
 

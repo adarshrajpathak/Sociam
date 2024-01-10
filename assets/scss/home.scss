@@ -1,0 +1,38 @@
+body{
+    margin:0px !important;
+    background-color: yellow;
+    color:black;
+    #feed-posts{
+        textarea{
+            color:black;
+        }
+    }
+}
+#container-body{
+    display: flex;
+}
+#feed-posts{
+    width:80%;
+    padding:10px;
+}
+#friends-suggestion{
+    width:20%;
+    padding:10px;
+    margin-left: 1px black solid;
+}
+#post-container{
+    margin: auto;
+    margin-bottom: 5px;
+    height: auto;
+    width: 300px;
+    #post-list-section{
+        width: 100%;
+        .post-container{
+            width:100%;
+        }
+    }
+}
+#container-friends{
+    border-left: 1px solid black;
+    height: 100%;
+}

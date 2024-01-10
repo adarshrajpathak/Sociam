@@ -1,3 +1,32 @@
-body{
-    background-color: yellow;
-}
+body {
+  margin: 0px !important;
+  background-color: yellow;
+  color: black; }
+  body #feed-posts textarea {
+    color: black; }
+
+#container-body {
+  display: flex; }
+
+#feed-posts {
+  width: 80%;
+  padding: 10px; }
+
+#friends-suggestion {
+  width: 20%;
+  padding: 10px;
+  margin-left: 1px black solid; }
+
+#post-container {
+  margin: auto;
+  margin-bottom: 5px;
+  height: auto;
+  width: 300px; }
+  #post-container #post-list-section {
+    width: 100%; }
+    #post-container #post-list-section .post-container {
+      width: 100%; }
+
+#container-friends {
+  border-left: 1px solid black;
+  height: 100%; }

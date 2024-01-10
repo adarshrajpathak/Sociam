@@ -6,15 +6,13 @@ const router=express.Router();
 const passport=require('passport');
 
 //importing the controller
-const postsController=require('../controllers/posts_controller');
-//creating the route for the controller 
-router.get('/feed',postsController.feed);
+const commentsController=require('../controllers/comments_controller');
 
 //post feature only available when the user is signed in
-router.post('/create',passport.checkAuthentication, postsController.create);
+router.post('/create',passport.checkAuthentication, commentsController.create);
 
-//deleting the post feature
-router.get('/destroy/:id',passport.checkAuthentication,postsController.destroy);
+//get request to delete the comment
+router.get('/destroy/:id',passport.checkAuthentication, commentsController.destroy);
 
 //making this file available for the index.js(or all)
 module.exports=router;

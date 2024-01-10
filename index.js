@@ -2,10 +2,14 @@
 const express=require('express');
 //asssinging the port number
 const port=8000;
+//importing the path
+const path=require('path');
 //importing body-parser for decoding the form payload(POST data)
 const bodyParser=require('body-parser');
 //importing cookie-parser for using cookie
 const cookieParser=require('cookie-parser');
+//importing the node-sass-middleware
+const sassMiddleware=require('node-sass-middleware');
 
 //creating the instance of the express
 const app=express();
@@ -19,6 +23,10 @@ const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
 //importing the connect-mongo for persistent session cookie [mongo-store]
 const MongoStore=require('connect-mongo');
+//importing the flash-connect for sending flash msg to front-end
+const flash=require('connect-flash');
+//importing the custom Middlware made by us
+const customMware=require('./config/middleware');
 
 //importing the express-ejs-layout
 const  expressLayouts=require('express-ejs-layouts');
@@ -34,9 +42,18 @@ app.use(bodyParser.urlencoded({extended:false}));
 //using the cookie-parser
 app.use(cookieParser());
 
+//compiling the .scss file to .css
+app.use(sassMiddleware({
+    //options
+    src:path.join(__dirname,'assets/scss'),
+    dest:path.join(__dirname,'assets/css'),
+    debug:false,
+    outputStyle:'extended',
+    prefix:'/css'
+}))
 //serving the static files using the app.use middleware
 app.use(express.static('./assets'));
-
+app.use('/lib', express.static('./node_modules/noty/lib'));
 
 //setting up the views
 app.set('view engine','ejs');
@@ -60,6 +77,8 @@ app.use(passport.initialize());
 app.use(passport.session());    //inbuild function of passport
 //just establish/set the user(who is visiting)
 app.use(passport.setAuthenticatedUser);
+app.use(flash());
+app.use(customMware.setFlash);
 
 //Putting the middleware to transfer the request to the routes/index.js
 app.use('/',require('./routes/index')); //('.routes) automatically fetches the index.js

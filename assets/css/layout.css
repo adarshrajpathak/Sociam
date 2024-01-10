@@ -2,14 +2,14 @@
     --primary:#57a5d5;
 }
 body{
-    margin:0px;
+    margin:0px !important;
     text-align: center;
     background-color: var(--primary);
     /* background-color: cyan; */
 }
 footer{
     width: 100%;
-    position: absolute;
+    /* position: absolute; */
     bottom: 20px;
     text-align: center;
     margin:auto;

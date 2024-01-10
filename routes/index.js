@@ -15,6 +15,7 @@ router.get('/',homeController.home);
 // router.use('/signup',require('./signup'));
 router.use('/user',require('./user'));
 router.use('/posts',require('./posts'));
+router.use('/comments',require('./comments'));
 
 //exporting router config to all files so that index.js can use it
 module.exports=router;
