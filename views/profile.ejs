@@ -1,22 +1,31 @@
 <link rel="stylesheet" type="text/css" href="/css/profile.css">
 <link rel="stylesheet" type="text/css" href="/css/new.css">
 <main>
-    <h2>This is the Profile page</h1>
-        <ul type="none">
+    <!-- <h2>This is the Profile page</h1> -->
+        <div class="profile-container">
+            <img class="profile-pic" src="<%=profile_user.avatar ? profile_user.avatar : '/images/placeholder_user.png'%>" alt="<%=profile_user.name%>"  width="100">
             <!-- User Id and Profile Id are same so updation allowed -->
             <% if(locals.user.id==locals.profile_user.id){%>
-                <form action="/user/update/<%=profile_user.id%>" method="POST">
+                <form action="/user/update/<%=profile_user.id%>" enctype="multipart/form-data" method="POST">
+                <div class="preview-container">
+                    <img class="preview-image" id="output-preview" width="200">
+                    <div class="crop-area"></div>
+                </div>
+                    <input type="file" name="avatar" placeholder="Profile Picture" id="upload-preview">
                     <input type="text" name="name" placeholder="Your Name" value="<%=profile_user.name%>" required>
                     <input type="email" name="email" placeholder="Your Email" value="<%=profile_user.email%>" required>
                     <input type="submit" value="Update">
                 </form>
             <% }else{ %>
+            <ul class="profile-info">
                 <!-- else show only the profile info -->
                 <li>Name: <%= profile_user.name %></li>
-                <li>Email: <%= profile_user.email %></li>
+                <li >Email: <%= profile_user.email %></li>
                 <!-- <li>Password:<%= profile_user.password %></li> -->
+            </ul>
             <% } %>
-        </ul>
+        </div>
+    <script src="/js/profile.js"></script>
 </main>
 
 <!-- with partials we have to to this -->

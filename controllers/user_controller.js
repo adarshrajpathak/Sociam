@@ -1,6 +1,9 @@
 //importing the parser module
 const bodyParser=require('body-parser');
 const User = require('../models/user');
+//importing the file and path module for avatar detecting and unlinking
+const fs=require('fs');
+const path=require('path');
 
 //exporting the function to the user route
 module.exports.profile=function(req,res){
@@ -22,21 +25,58 @@ module.exports.profile=function(req,res){
     })
 }
 //for profile update
-module.exports.update=function(req,res){
-    //check user loggedin and Update to be made
+module.exports.update= async function(req,res){
+    //conversion to encty=mutlipart/form-data adds new body object and file object
     if(req.user.id==req.params.id){
-        User.findByIdAndUpdate(req.params.id, {name:req.body.name, email:req.body.email})
-        .then((user)=>{
-            req.flash('success','Credentials Updated Successfully');
-            return res.redirect('back');
-        }).catch((err)=>{
-            console.log("Error in Updating the profile Details"+ err);
-            req.flash('error',"Credentails didn't updated");
-            return res.redirect('back');
-        })
+        try{
+            let user= await User.findById(req.params.id);
+            User.uploadedAvatar(req,res,function(err){
+                if(err){console.log('Multer Error:',err)}
+                // console.log(req.body);
+                // console.log(req.file);
+                user.name=req.body.name;    //accessed via the static function uploadedAvatar
+                user.email=req.body.email;
+                if(req.file){
+                    //checking if avatar exits and available to the user(at both db&server)
+                    if(user.avatar  //there is file ref. in the user instance of db
+                        &&
+                        fs.existsSync(path.join(__dirname, '..', user.avatar))){  //file exits on server
+
+                        //deleting the avatar if exists then delete it
+                        fs.unlinkSync(path.join(__dirname, '..', user.avatar));
+                    }
+
+                    //saving the path of uploaded file into the avatar field in the user
+                    user.avatar=User.avatarPath+'/'+req.file.filename;
+                }
+                user.save();
+                req.flash('success','Credentials Updated Successfully');
+                return res.redirect('back');
+            })
+        }catch(err){
+            console.log("Error Updating Credentials");
+            req.flash('error',"Error Updating Credentials")
+        }
     }else{
+        console.log('Unable to update the credentials');
         return res.status(401).send('Unauthorized');
     }
+
+    // check user loggedin and Update to be made
+    // if(req.user.id==req.params.id){
+    //     User.findByIdAndUpdate(req.params.id, {name:req.body.name, email:req.body.email})
+    //     .then((user)=>{
+    //         req.flash('success','Credentials Updated Successfully');
+    //         return res.redirect('back');
+    //     }).catch((err)=>{
+    //         console.log("Error in Updating the profile Details"+ err);
+    //         req.flash('error',"Credentails didn't updated");
+    //         return res.redirect('back');
+    //     })
+    // }else{
+    //     console.log('Unable to update the credentials');
+    //     return res.status(401).send('Unauthorized');
+    // }
 }
 
 //login action

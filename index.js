@@ -54,6 +54,8 @@ app.use(sassMiddleware({
 //serving the static files using the app.use middleware
 app.use(express.static('./assets'));
 app.use('/lib', express.static('./node_modules/noty/lib'));
+//making the upload path publically available
+app.use('/uploads',express.static(__dirname+'/uploads'));
 
 //setting up the views
 app.set('view engine','ejs');

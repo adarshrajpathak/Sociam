@@ -1,4 +1,4 @@
-{
+{   
     //using to jQuery to raise XMLHttpRequest (xhr) request for ease post creation
     let createPost=function(){
         let newPostForm=$('#new-post-form');
