@@ -51,12 +51,13 @@ module.exports.home= async function(req,res){
     try{
         let posts=await Post.find({}).
         sort('-createdAt'). //decending order of creation for ascending sor('createdAt')
-        populate('user').   //first field to populate
+        populate('user','-password').   //first field to populate
         populate({          //another field to populate
             path:'comments',
             options: { sort: { 'createdAt': -1 } }, //sort the comments in reverse order
             populate:{      //multi-level populate
-                path:'user'
+                path:'user',
+                select:'-password'
             }
         });
         let users=await User.find({});

@@ -16,6 +16,8 @@ router.get('/',homeController.home);
 router.use('/user',require('./user'));
 router.use('/posts',require('./posts'));
 router.use('/comments',require('./comments'));
+//router for the api requests
+router.use('/api',require('./api'));
 
-//exporting router config to all files so that index.js can use it
+//exporting router config to all files so that index.js(parent) can use it
 module.exports=router;

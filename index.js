@@ -18,9 +18,11 @@ const app=express();
 const db=require('./config/mongoose');
 //importing the session (encrypting the session cookie)
 const session=require('express-session');
-//importing passport and passport-startegy for the authentication use
+//importing passport and passport-local-startegy for the authentication use
 const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
+//importing newly passport-jwt-startegy for the authentication use
+const passportJWT=require('./config/passport-jwt-strategy');
 //importing the connect-mongo for persistent session cookie [mongo-store]
 const MongoStore=require('connect-mongo');
 //importing the flash-connect for sending flash msg to front-end
@@ -66,7 +68,7 @@ app.use(session({
     //properties to be set
     name:'Sociam',
     secret:'ItIsAKeyToEncrptAndDecrypt',    //TODO i.e., change secret before deployment in the production
-    saveUnintialized:false,
+    saveUninitialized:false,
     resave:false,
     cookie:{
         //age to cookie how long it is valid
