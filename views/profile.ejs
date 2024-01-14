@@ -6,7 +6,7 @@
             <img class="profile-pic" src="<%=profile_user.avatar ? profile_user.avatar : '/images/placeholder_user.png'%>" alt="<%=profile_user.name%>"  width="100">
             <!-- User Id and Profile Id are same so updation allowed -->
             <% if(locals.user.id==locals.profile_user.id){%>
-                <form action="/user/update/<%=profile_user.id%>" enctype="multipart/form-data" method="POST">
+                <form action="/users/update/<%=profile_user.id%>" enctype="multipart/form-data" method="POST">
                 <div class="preview-container">
                     <img class="preview-image" id="output-preview" width="200">
                     <div class="crop-area"></div>

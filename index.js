@@ -23,6 +23,8 @@ const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
 //importing newly passport-jwt-startegy for the authentication use
 const passportJWT=require('./config/passport-jwt-strategy');
+//importing social/3rd-party passport-google-startegy for the authentication use
+const passportGoogle=require('./config/passport-google-oauth2-strategy');
 //importing the connect-mongo for persistent session cookie [mongo-store]
 const MongoStore=require('connect-mongo');
 //importing the flash-connect for sending flash msg to front-end

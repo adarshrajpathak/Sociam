@@ -3,11 +3,11 @@
     <h1><%= title %></h1>
     <ul type="none">
         <% if(locals.user){%>
-            <li><a href="/user/profile/<%= user.id %>"><%= user.name %></a></li>
-            <li><a href="/user/signout">Sign Out</a></li>
+            <li><a href="/users/profile/<%= user.id %>"><%= user.name %></a></li>
+            <li><a href="/users/signout">Sign Out</a></li>
         <% }else{ %>
-            <li><a href="/user/login">Log In</a></li>
-            <li><a href="/user/signup">Sign Up</a></li>
+            <li><a href="/users/login">Log In</a></li>
+            <li><a href="/users/signup">Sign Up</a></li>
         <% } %>
     </ul>
 </header>
