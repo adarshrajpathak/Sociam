@@ -21,6 +21,15 @@ router.get('/signout',userController.signout);
 //TODO route for the signup
 router.post('/create',userController.create);
 
+//TODO route for forgetPassword
+router.get('/reset-passwd',userController.resetPass);
+//create token
+router.post('/create-token',userController.createToken);
+//create password form display
+router.get('/create-password/:id',userController.servePasswordForm);
+//create new password
+router.post('/update-password/:id',userController.updatePassword);
+
 //TODO route for the login
 // router.post('/create-session',userController.createSession);
 

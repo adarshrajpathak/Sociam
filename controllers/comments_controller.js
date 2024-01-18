@@ -1,7 +1,12 @@
 //importing comment schema module
+const commentsMailer=require('../mailers/comments_mailer');
 const Comment=require('../models/comment');
 //also have to modification in the post
 const Post=require('../models/post');
+//importing queue for adding job of mailing after new comment created
+const queue=require('../config/kue');
+//also importing worker 
+const commentEmailWorker=require('../workers/comment_email_worker');
 
 //making the posts controller
 module.exports.create=function(req,res){
@@ -17,7 +22,21 @@ module.exports.create=function(req,res){
                 //also add the comment to the posts array comments of the current post fetched
                 post.comments.push(comment);
                 post.save();
-                await comment.populate('user','name'); //populate only Field Selection so, second 
+                await comment.populate('user','name email'); //populate only Field Selection so, second 
+                // await post.populate('user','name email');   //exclusive for post email ack
+                // commentsMailer.newComment(post);    //send the email to the user of the post
+
+                // mailing job is added in the KUE
+                // commentsMailer.newComment(comment); //send the email acknowledgement to user
+                //Every task put in queue is job, hence creating new job
+                let job=queue.create('emails',comment).save(function(err){  //queue-name(appendorCreate if not exits, data/email/info)
+                    if(err){
+                        console.log('error in creating a queue',err);
+                        return;
+                    }
+                    console.log('job enqueued',job.id); //job id available just after created
+                });
+
                 if(req.xhr){
                     return res.status(200).json({
                         data:{
@@ -31,7 +50,7 @@ module.exports.create=function(req,res){
                 res.redirect('back');
             }).catch((err)=>{
                 req.flash('error','Unable to Comment');
-                console.log("Error while creating a new comment");
+                console.log("Error while creating a new comment"+err);
                 res.redirect('back');
             })
         }

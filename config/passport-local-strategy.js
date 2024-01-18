@@ -58,7 +58,7 @@ passport.checkAuthentication=function(req,res,next){
         return next();
     }
     //if not authenticated
-    return res.redirect('/user/login');
+    return res.redirect('/users/login');
 }
 //set the user for views
 passport.setAuthenticatedUser=function(req,res,next){
