@@ -11,6 +11,12 @@
             <%= post.user.name %>
         </p>
     </small>
+    <%if(locals.user){%>
+        <div class="like-toggle">
+            <a class="like-button" href="/likes/toggle/?id=<%=post._id%>&type=Post"><i class="far fa-thumbs-up"></i></a>
+            <small><span id="count-post-<%=post._id%>-Likes"><%=post.likes.length%></span> Likes</small>
+        </div>
+    <%}%>
     <hr>
     <div id="post-<%=post.id%>-comments">
         <!-- Comment functionality only available when User logged in -->

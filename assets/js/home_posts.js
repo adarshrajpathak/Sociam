@@ -164,4 +164,32 @@
         })
     };
     deleteComment();
+    //for like using the xhr request
+    let toggleLike=function(){
+        $('.like-button').click(function(e){
+            e.preventDefault();
+            $.ajax({
+                method:'get',
+                url:$(this).prop('href'),   //property href and this is the specific element that was clicked
+                success:function(data){
+                    // console.log(data);
+                    let likesCountElement=$(`#count-post-${data.data.comment_id}-Likes`);
+                    let likesCount=Number(likesCountElement.text());
+                    likesCountElement.text(currentLikesCount + 1);
+                    $(this).css("color", "#4CAF50");
+                    //noty success notificaton for comment creation
+                    new Noty({
+                        theme: 'light',
+                        type: 'success',
+                        text: `${data.notyText}`,
+                        layout: 'topRight',
+                        timeout: 1500
+                    }).show();                
+                },error:function(error){
+                    console.log(error.responseText);
+                }
+            })
+        })
+    };
+    toggleLike();
 }

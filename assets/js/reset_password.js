@@ -8,7 +8,7 @@
 
             $.ajax({
                 type: 'post',
-                url: '/users/create-token',
+                url: resetPasswordForm.attr('action'),
                 data: resetPasswordForm.serialize(),
                 success: function(data){
                     // console.log(data);

@@ -58,8 +58,11 @@ module.exports.home= async function(req,res){
             populate:{      //multi-level populate
                 path:'user',
                 select:'-password'
+            },
+            populate:{         //not needed
+                path:'likes'
             }
-        });
+        }).populate('likes');   //not needed
         let users=await User.find({});
 
         return res.render('./home',{

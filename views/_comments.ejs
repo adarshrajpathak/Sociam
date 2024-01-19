@@ -1,4 +1,4 @@
-<li id="comment-<%= comment.id%>">
+<li id="comment-<%= comment.id%>" class="comment-div">
     <!-- Delete button for the comment -->
     <small>
         <% if ((locals.user && locals.user.id==comment.user._id) || (locals.user && locals.user.id==post.user.id)) { %>
@@ -11,4 +11,10 @@
             <%= comment.user.name %>
         </p>
     </small>
+    <%if(locals.user){%>
+        <div class="like-toggle">
+            <a class="like-button" href="/likes/toggle/?id=<%=comment._id%>&type=Comment"><i class="far fa-thumbs-up"></i></i></a>
+            <small><span id="count-comment-<%=comment._id%>-Likes"><%=comment.likes.length%></span> Likes</small>
+        </div>
+    <%}%>
 </li>

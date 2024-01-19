@@ -1,10 +1,11 @@
 <link rel="stylesheet" type="text/css" href="/css/home.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<!-- <h2>Welcome to the HOME Page!!</h1> -->
 <main>
-    <h2>Welcome to the HOME Page!!</h1>
     <div id="container-body">
         <section id="feed-posts">
             <!-- feature available when user is signed in -->
-            <div>
+            <div id="create-post">
                 <% if (locals.user){ %>
                     <form action="/posts/create" id="new-post-form" method="POST">
                         <textarea name="content" cols="30" rows="3" placeholder="What's in your mind?" required></textarea>
