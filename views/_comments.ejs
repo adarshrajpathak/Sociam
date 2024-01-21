@@ -13,7 +13,12 @@
     </small>
     <%if(locals.user){%>
         <div class="like-toggle">
-            <a class="like-button" href="/likes/toggle/?id=<%=comment._id%>&type=Comment"><i class="far fa-thumbs-up"></i></i></a>
+            <a class="like-button<%= comment.likes.some(like => like.user._id.equals(deviceUser._id)) ? ' liked' : '' %>" href="/likes/toggle/?id=<%=comment._id%>&type=Comment"><i class="far fa-thumbs-up"></i></a>
+            <small><span id="count-comment-<%=comment._id%>-Likes"><%=comment.likes.length%></span> Likes</small>
+        </div>
+    <%}else{%>
+        <div class="like-toggle">
+            <i class="far fa-thumbs-up"></i>
             <small><span id="count-comment-<%=comment._id%>-Likes"><%=comment.likes.length%></span> Likes</small>
         </div>
     <%}%>

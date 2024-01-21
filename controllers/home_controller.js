@@ -59,13 +59,28 @@ module.exports.home= async function(req,res){
                 path:'user',
                 select:'-password'
             },
-            populate:{         //not needed
+            populate:{         
                 path:'likes'
+            },
+            populate: {
+                path: 'likes',
+                populate: {
+                    path: 'user',
+                    select: '_id'
+                }
             }
-        }).populate('likes');   //not needed
+        })    
+        .populate({
+            path: 'likes',
+            populate: {
+                path: 'user',
+                select: '_id'
+            }
+        });  
         let users=await User.find({});
-
+        // console.log(req.user._id);
         return res.render('./home',{
+            deviceUser:req.user,
             posts:posts,
             all_users:users,
             title:'Sociam',

@@ -105,20 +105,20 @@ main {
 
     a {
         text-decoration: none;
+        color: #808080;
 
         i.like-button {
             font-size: 24px; // Adjust this to change the size of the icon
-            color: #ccc;
+            color: #808080;
             transition: color 0.3s ease;
-
-            &:hover {
-                color: #4CAF50;
-            }
         }
     }
 
     small {
         font-size: 14px;
-        color: #333;
+        color: #333333;
     }
+}
+.liked {
+    color: #00008B !important;
 }

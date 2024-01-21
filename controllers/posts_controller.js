@@ -2,6 +2,8 @@
 const Post=require('../models/post');
 //importing comments schema module
 const Comment=require('../models/comment');
+//importing likes schema module
+const Like=require('../models/Like');
 
 // exporting the function (specifically for posts route)
 module.exports.feed=function(req,res){
@@ -44,9 +46,13 @@ module.exports.create=function(req,res){
 //making the posts destroyer controller
 module.exports.destroy=function(req,res){
     Post.findById(req.params.id.trim())
-    .then((post)=>{
+    .then(async function(post){
         //if the user of post and user requested to delete are same
         if(post.user==req.user.id){
+            //remove all the likes on the post
+            await Like.deleteMany({likable:post,onModel:'Post'});
+            //remove all the likes from the comments as well
+            await Like.deleteMany({_id:{$in:post.comments}});//match:id in post.comments array
             //remove the post
             post.deleteOne()
             //remove all the comments associated with the post

@@ -74,13 +74,15 @@ main {
   align-items: center;
   gap: 10px; }
   .like-toggle a {
-    text-decoration: none; }
+    text-decoration: none;
+    color: #808080; }
     .like-toggle a i.like-button {
       font-size: 24px;
-      color: #ccc;
+      color: #808080;
       transition: color 0.3s ease; }
-      .like-toggle a i.like-button:hover {
-        color: #4CAF50; }
   .like-toggle small {
     font-size: 14px;
-    color: #333; }
+    color: #333333; }
+
+.liked {
+  color: #00008B !important; }

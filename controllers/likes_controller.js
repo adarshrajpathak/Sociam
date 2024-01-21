@@ -8,6 +8,7 @@ module.exports.toggleLike=async function(req,res){
     try{    //link:likes/toggle/?id=abcdef&type=Post/Comment
         let likable;
         let deleted=false;  //for purpose of increment and decrement
+        let notyText;
         if(req.query.type=="Post"){ //if post
             likable=await Post.findById(req.query.id).populate('likes');
         }else{  //if comment
@@ -15,27 +16,30 @@ module.exports.toggleLike=async function(req,res){
         }
         // console.log(likable);
         let existingLike=await Like.findOne({user:req.user.id.trim(), likable:likable._id,onModel:req.query.type});
-        console.log(existingLike+"Existing Like");
+        // console.log(existingLike+"Existing Like");
         if(existingLike){   //if the like already exits
             likable.likes.pull(existingLike._id);
+            // console.log(req.user._id+" vs "+req.user.id);
             likable.save();
             deleted=true;
             existingLike.deleteOne();
-            console.log("Deleted!")
+            console.log("Deleted!");
+            notyText=`Removed like from the ${req.query.type}`;
         }else{  //making a new like
             let newLike=await Like.create({
                 user:req.user._id,
                 likable:likable._id,    //req.query.id i.e,here later likable is post/comment
                 onModel:req.query.type
             })
-            console.log("New Like Created"+newLike);
+            // console.log("New Like Created"+newLike);
             likable.likes.push(newLike._id);
+            notyText=`Liked the ${req.query.type}`;
             likable.save();
         }
         //after all successful
         return res.status(200).json({
-            message:`Liked the ${req.query.type}`,
-            notyText:`Liked the ${req.query.type}`,
+            message:notyText,
+            notyText:notyText,
             data:{
                 deleted:deleted
             }

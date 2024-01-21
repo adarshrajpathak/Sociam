@@ -3,6 +3,8 @@ const commentsMailer=require('../mailers/comments_mailer');
 const Comment=require('../models/comment');
 //also have to modification in the post
 const Post=require('../models/post');
+//importing likes schema module
+const Like=require('../models/Like');
 //importing queue for adding job of mailing after new comment created
 const queue=require('../config/kue');
 //also importing worker 
@@ -62,12 +64,14 @@ module.exports.create=function(req,res){
 module.exports.destroy=function(req,res){
     // console.log(req.params.id);
     Comment.findById(req.params.id.trim()).populate('post') //first fill the post section
-    .then(comment=>{
+    .then(async function(comment){
         //checking if the user is logged in and is original author
         // console.log(comment.post.user);
         // console.log(req.user.id);
         if(comment.user._id==req.user.id || comment.post.user==req.user.id){ //or comment.user==req.user.id
             let postId=comment.post;
+            //delete the likes on the comment
+            await Like.deleteMany({likeable:comment._id,onModel:'Comment'});
             comment.deleteOne();    //deleted the original comment
             //Update the comments array of the post
             Post.findByIdAndUpdate(postId, {$pull: {comments: req.params.id}})
