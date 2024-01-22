@@ -24,6 +24,9 @@ router.post('/create',userController.create);
 //route forwarded for password related stuffs
 router.use('/password',require('./passwords'));
 
+//route for friendship request
+router.get('/friend/:id',passport.checkAuthentication, userController.toggleFriend);
+
 // // route for forgetPassword
 // router.get('/reset-passwd',userController.resetPass);
 // //create token

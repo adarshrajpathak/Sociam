@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="/css/profile.css">
 <link rel="stylesheet" type="text/css" href="/css/new.css">
-<main>
+<div>
     <!-- <h2>This is the Profile page</h1> -->
         <div class="profile-container">
             <img class="profile-pic" src="<%=profile_user.avatar ? profile_user.avatar : '/images/placeholder_user.png'%>" alt="<%=profile_user.name%>"  width="100">
@@ -19,15 +19,26 @@
             <% }else{ %>
             <ul class="profile-info">
                 <!-- else show only the profile info -->
+                <li>
+                    <% if(profile_user.friendships.some(friendship => friendship.from_user == user.id || friendship.to_user == user.id)){%>
+                        <button id="friend-button" class="red">
+                            <a id="friend-toggle" href="/users/friend/<%=profile_user._id%>">Remove Friend</a>
+                        </button>
+                        <%}else{%>
+                        <button id="friend-button" class="green">
+                            <a id="friend-toggle" href="/users/friend/<%=profile_user._id%>">Send Friend Request</a>
+                        </button>
+                        <%}%>
+                </li>
                 <li>Name: <%= profile_user.name %></li>
                 <li >Email: <%= profile_user.email %></li>
                 <!-- <li>Password:<%= profile_user.password %></li> -->
             </ul>
             <% } %>
         </div>
-    <script src="/js/profile.js"></script>
-</main>
-
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="/js/profile.js"></script>
+</div>
 <!-- with partials we have to to this -->
 <!-- <!DOCTYPE html>
 <html lang="en">

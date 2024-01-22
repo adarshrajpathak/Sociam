@@ -41,4 +41,38 @@
     };
     toggleLike();
     window.toggleLike=toggleLike;
+
+    let toggleFriend=function(){
+        $('.friend-toggle').click(function(e){
+          e.preventDefault();
+         //  console.log(e);
+          let self=this;
+          $.ajax({
+                  method:'get',
+                  url:$(self).prop('href'),   //property href and this is the specific element that was clicked
+              })
+              .done(function(data){
+                  if(data.data.areFriends==true){
+                    $(self).text('x');
+                  }else{
+                    $(self).text('+');
+                  }
+                  //noty success notificaton for comment creation
+                  new Noty({
+                    theme: 'light',
+                      type: 'success',
+                      text: `${data.notyText}`,
+                      layout: 'topRight',
+                      timeout: 1500
+                    }).show();
+              }).fail(function() {
+                // This function is called if the AJAX request fails
+                  console.log('AJAX request failed');
+              }).always(function() {
+                  // This function is always called, regardless of whether the AJAX request succeeds or fails
+                  // console.log('AJAX request completed');
+              });
+          })
+    };
+    toggleFriend();
 }

@@ -1,18 +1,19 @@
 body {
+  width: 100%;
   font-family: Arial, sans-serif;
   background-color: lightblue;
   color: #333; }
 
+aside {
+  width: 20%; }
+
 main {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between; }
-  main #container-body {
-    display: flex;
-    justify-content: space-between; }
   main #feed-posts {
-    width: 66.66%; }
+    width: 100%; }
     main #feed-posts #create-post form {
       margin: 20px 0;
       display: flex;
@@ -40,18 +41,22 @@ main {
       margin-bottom: 20px;
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
-  main #friends-suggestion {
-    width: 33.33%; }
-    main #friends-suggestion h4 {
-      color: #333;
-      font-size: 1.5em; }
-    main #friends-suggestion p {
-      margin-bottom: 10px; }
-    main #friends-suggestion a {
-      color: #333;
-      text-decoration: none; }
-      main #friends-suggestion a:hover {
-        text-decoration: underline; }
+
+#user-sidebar {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+  #user-sidebar h4 {
+    color: #333;
+    font-size: 1.5em; }
+  #user-sidebar p {
+    margin-bottom: 10px; }
+  #user-sidebar a {
+    color: #333;
+    text-decoration: none; }
+    #user-sidebar a:hover {
+      text-decoration: underline; }
 
 .new-comment-form input[type="submit"] {
   background-color: #4CAF50;

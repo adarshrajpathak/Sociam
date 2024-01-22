@@ -77,7 +77,7 @@ module.exports.home= async function(req,res){
                 select: '_id'
             }
         });  
-        let users=await User.find({});
+        let users=await User.find({}).populate('friendships');
         // console.log(req.user._id);
         return res.render('./home',{
             deviceUser:req.user,
@@ -88,7 +88,7 @@ module.exports.home= async function(req,res){
             year:2023,
             major:1,
             minor:0,
-            patch:0    
+            patch:0,
         })
         }catch(err){
         console.log("Error Occured", err);

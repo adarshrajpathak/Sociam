@@ -1,6 +1,7 @@
 //importing the parser module
 const bodyParser=require('body-parser');
 const User = require('../models/user');
+const Friend=require('../models/friendship');
 //importing the file and path module for avatar detecting and unlinking
 const fs=require('fs');
 const path=require('path');
@@ -8,10 +9,11 @@ const path=require('path');
 //exporting the function to the user route
 module.exports.profile=function(req,res){
     // res.end("<h1>Howdy!! It's your profile</h1>");
-    User.findById(req.params.id.trim())
+    User.findById(req.params.id.trim()).populate('friendships')
     .then(u=>{
         // console.log(u);
         return res.render('profile',{            //return
+            user:req.user,
             profile_user:u,
             title:'Sociam',
             author:'Adarsh Raj Pathak',
@@ -154,4 +156,52 @@ module.exports.signout=function(req,res){
         req.flash('success','You have Logged Out');
         res.redirect('/');
     });
+}
+module.exports.toggleFriend=async function(req,res){
+    try{
+        if(req.user.id!=req.params.id){
+            //different users wanted to be friends
+            let areFriends=true;
+            let fromUser=await User.findById(req.user.id);
+            let toUser=await User.findById(req.params.id);
+            let existingFriend=await Friend.findOne({
+                $or: [
+                    { $and: [{ from_user: req.user.id }, { to_user: req.params.id }] },
+                    { $and: [{ from_user: req.params.id }, { to_user: req.user.id }] }
+                ]
+            });
+            if(existingFriend){   //if the Friendship already exits
+                fromUser.friendships.pull(existingFriend._id);
+                fromUser.save();
+                toUser.friendships.pull(existingFriend._id);
+                toUser.save();
+                areFriends=false;
+                existingFriend.deleteOne();
+                // console.log("Unfriended!");
+                notyText=`UnFriended`;
+            }else{  //making a new friendship
+                let newFriend=await Friend.create({
+                    from_user:req.user.id,
+                    to_user:req.params.id
+                })
+                fromUser.friendships.push(newFriend._id);
+                fromUser.save();
+                toUser.friendships.push(newFriend._id);
+                toUser.save();
+                // console.log("Friended!");
+                notyText=`Friended`;
+            }
+            return res.status(200).json({
+                message:notyText,
+                notyText:notyText,
+                data:{
+                    areFriends:areFriends
+                }
+            })
+        }else{
+            console.log("Same User can't create friendship");
+        }
+    }catch(err){
+        console.log("Error in toggling friendsip"+err);
+    }
 }
