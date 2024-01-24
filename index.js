@@ -14,6 +14,13 @@ const sassMiddleware=require('node-sass-middleware');
 //creating the instance of the express
 const app=express();
 
+//setting-up the chat server to be used with socket.io
+const chatServer=require('http').Server(app);   //http built-in module
+                                                //function in the config/chat_socket module
+const chatSockets=require('./config/chat_socket').chatSockets(chatServer);
+chatServer.listen(5000);
+console.log('Chat Server is listening on port 5000');
+
 //importing the mongoDB settings
 const db=require('./config/mongoose');
 //importing the session (encrypting the session cookie)

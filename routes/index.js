@@ -2,6 +2,8 @@
 const express=require('express');
 //createing instance router that help to separate the route & controller
 const router=express.Router();
+//for authenticaton
+const passport=require('passport');
 //importing the home controller
 const homeController=require('../controllers/home_controller');
 
@@ -9,7 +11,7 @@ const homeController=require('../controllers/home_controller');
 // console.log("Router is working Great!");
 
 //for the root level routes
-router.get('/',homeController.home);
+router.get('/', passport.checkAuthentication, homeController.home);
 //putting the middleware to transfer the /xyz request
 // router.use('/login',require('./login'));
 // router.use('/signup',require('./signup'));
