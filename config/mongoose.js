@@ -1,8 +1,8 @@
 //importing mongoose module
 const mongoose=require('mongoose');
-
+const env=require('./environment');
 //connecting to the mongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/sociam_development');
+mongoose.connect(`mongodb://127.0.0.1:27017/${env.db_name}`);
 
 //acquring the connection
 const db=mongoose.connection;

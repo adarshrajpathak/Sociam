@@ -1,6 +1,7 @@
 //importing the jsonwebtoken module used to generate the jwt token
 const jwt= require('jsonwebtoken');
 const User=require('../../../models/user');
+const env=require('../../../config/environment');
 
 module.exports.createSession=async function(req,res){
     try{
@@ -14,7 +15,7 @@ module.exports.createSession=async function(req,res){
         return res.status(200).json({
             message:'Sigin successful, dropping your jwt token',
             data:{  //sing(payload,secretOrPrivateKey, [options,callback])
-                token:jwt.sign(user.toJSON(),'sociam_arp',{expiresIn:'100000'})
+                token:jwt.sign(user.toJSON(),env.jwt_secret_key,{expiresIn:'100000'})
             }
         })
     }catch(err){

@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<link rel="stylesheet" type="text/css" href="/css/home.css">
-<link rel="stylesheet" type="text/css" href="/css/chatbox.css">
+<link rel="stylesheet" type="text/css" href="<%= assetPath('css/home.css')%>"">
+<link rel="stylesheet" type="text/css" href="<%= assetPath('css/chatbox.css')%>"">
 <!-- <h2>Welcome to the HOME Page!!</h1> -->
 <%- include('_navSidebar.ejs') %>
 <div id="container-body">
@@ -30,12 +30,12 @@
 <%- include('_peopleSidebar.ejs') -%>
 <%- include('_chatbox.ejs') -%>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="/js/home_posts.js" ></script>
-<script src="/js/home_comments.js"></script>
-<script src="/js/home.js"></script>
+<script src="<%= assetPath('js/home_posts.js')%>" ></script>
+<script src="<%= assetPath('js/home_comments.js')%>"></script>
+<script src="<%= assetPath('js/home.js')%>"></script>
 <!-- <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>     -->
 <script src="https://cdn.socket.io/4.7.4/socket.io.min.js" integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4" crossorigin="anonymous"></script>
-<script src="/js/chat_engine.js"></script>
+<script src="<%= assetPath('js/chat_engine.js')%>"></script>
 <% if(locals.user){ %>
     <script>
         new ChatEngine('chatbox','<%=locals.user.email%>');

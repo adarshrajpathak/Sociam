@@ -1,0 +1,2 @@
+::ffff:127.0.0.1 - - [26/Jan/2024:18:08:35 +0000] "GET / HTTP/1.1" 200 40799 "http://localhost:8000/users/login" "Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0"
+::ffff:127.0.0.1 - - [26/Jan/2024:18:08:55 +0000] "GET /users/profile/6526dc1a9c61778fe3f7f56f HTTP/1.1" 304 - "http://localhost:8000/" "Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0"

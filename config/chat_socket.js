@@ -1,6 +1,6 @@
 //observer- Sending(emit)&receiving(on) on the server side
 module.exports.chatSockets=function(socketServer){  //receiving chatSockets here
-    let io=require('socket.io')(socketServer, {
+    let io=require('socket.io')(socketServer, { //creating a socket.io server instance
         cors: {
           origin: '*',
         }

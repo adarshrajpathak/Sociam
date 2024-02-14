@@ -13,6 +13,7 @@ const sassMiddleware=require('node-sass-middleware');
 
 //creating the instance of the express
 const app=express();
+require('./config/view_helper.js')(app);   //calling function on app for path resolution
 
 //setting-up the chat server to be used with socket.io
 const chatServer=require('http').Server(app);   //http built-in module
@@ -20,6 +21,9 @@ const chatServer=require('http').Server(app);   //http built-in module
 const chatSockets=require('./config/chat_socket').chatSockets(chatServer);
 chatServer.listen(5000);
 console.log('Chat Server is listening on port 5000');
+//importing the environment module for the variables
+const env=require('./config/environment');
+const logger=require('morgan'); //for logging in production
 
 //importing the mongoDB settings
 const db=require('./config/mongoose');
@@ -54,20 +58,23 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(cookieParser());
 
 //compiling the .scss file to .css
-app.use(sassMiddleware({
-    //options
-    src:path.join(__dirname,'assets/scss'),
-    dest:path.join(__dirname,'assets/css'),
-    debug:false,
-    outputStyle:'extended',
-    prefix:'/css'
-}))
+if(env.name=='development'){    //only when the env is dev
+    app.use(sassMiddleware({
+        //options
+        src:path.join(__dirname,env.asset_path,'scss'), //__dirname,'assets/scss'
+        dest:path.join(__dirname,env.asset_path,'css'), //__dirname,'assets/css'
+        debug:false,
+        outputStyle:'extended',
+        prefix:'/css'
+    }))
+}
+console.log(path.join(__dirname,env.asset_path,'scss'));
 //serving the static files using the app.use middleware
-app.use(express.static('./assets'));
+app.use(express.static(path.join(__dirname, env.asset_path)));
 app.use('/lib', express.static('./node_modules/noty/lib'));
 //making the upload path publically available
 app.use('/uploads',express.static(__dirname+'/uploads'));
-
+app.use(logger(env.morgan.mode, env.morgan.options));    //use morgan as logger
 //setting up the views
 app.set('view engine','ejs');
 app.set('views','./views');
@@ -76,7 +83,7 @@ app.set('views','./views');
 app.use(session({
     //properties to be set
     name:'Sociam',
-    secret:'ItIsAKeyToEncrptAndDecrypt',    //TODO i.e., change secret before deployment in the production
+    secret:env.session_cookie_secret_key,    //TODO i.e., change secret before deployment in the production
     saveUninitialized:false,
     resave:false,
     cookie:{

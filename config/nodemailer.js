@@ -3,17 +3,9 @@ const nodemailer=require('nodemailer');
 //importing ejs engine for template rendering
 const ejs=require('ejs');
 const path=require('path');
+const env=require('./environment');
 //configuration from which sending mail
-let transporter = nodemailer.createTransport({
-    service: "gmail",
-    host:'smtp.gmail.com',  //with Gmail SMTP server
-    port: 587,  //default 25but for SSL/TLS working 587
-    secure: false,  //two factor authentication
-    auth: { //authentication object
-      user: "adarsh.raj.pathak.001@gmail.com",
-      pass: "sovr xavd enqx vamb",
-    },
-});
+let transporter = nodemailer.createTransport(env.smtp);
 
 //define that we are using template engine
 let renderTemplate=(data,relativePath)=>{   //relativePath from which function is called

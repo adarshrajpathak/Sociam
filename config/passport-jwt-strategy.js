@@ -6,10 +6,11 @@ const JWTStrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 //needing user for authentication/ if user exists
 const User=require('../models/user');
+const env=require('./environment');
 
 var opts = {    //options
     jwtFromRequest:ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey:'sociam_arp'
+    secretOrKey:env.jwt_secret_key
     // issuer:
     // audience:
 }

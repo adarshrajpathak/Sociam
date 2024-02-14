@@ -1,9 +1,9 @@
-<link rel="stylesheet" type="text/css" href="/css/profile.css">
-<link rel="stylesheet" type="text/css" href="/css/new.css">
+<link rel="stylesheet" type="text/css" href="<%= assetPath('css/profile.css')%>">
+<link rel="stylesheet" type="text/css" href="<%= assetPath('css/new.css')%>">
 <div>
     <!-- <h2>This is the Profile page</h1> -->
         <div class="profile-container">
-            <img class="profile-pic" src="<%=profile_user.avatar ? profile_user.avatar : '/images/placeholder_user.png'%>" alt="<%=profile_user.name%>"  width="100">
+            <img class="profile-pic" src="<%=profile_user.avatar ? profile_user.avatar :  assetPath('images/placeholder_user.png')%>" alt="<%=profile_user.name%>"  width="100">
             <!-- User Id and Profile Id are same so updation allowed -->
             <% if(locals.user.id==locals.profile_user.id){%>
                 <form action="/users/update/<%=profile_user.id%>" enctype="multipart/form-data" method="POST">
@@ -37,7 +37,7 @@
             <% } %>
         </div>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script src="/js/profile.js"></script>
+        <script src="<%= assetPath('js/profile.js')%>"></script>
 </div>
 <!-- with partials we have to to this -->
 <!-- <!DOCTYPE html>

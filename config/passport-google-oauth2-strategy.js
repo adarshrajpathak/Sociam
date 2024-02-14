@@ -6,12 +6,12 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const crypto=require('crypto');
 //importing the User Model for finding user and creating user
 const User=require('../models/user');
-
+const env=require('./environment');
 //tell passport to use google strategy
 passport.use(new GoogleStrategy({
-    clientID: "702679840438-e3i7l8mrj571lgcnu1on7avj49gbhhrq.apps.googleusercontent.com", //GOOGLE_CLIENT_ID
-    clientSecret: "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",  //GOOGLE_CLIENT_SECRET
-    callbackURL: "http://localhost:8000/users/auth/google/callback"
+    clientID: env.google_client_ID, //GOOGLE_CLIENT_ID
+    clientSecret: env.google_client_Secret,  //GOOGLE_CLIENT_SECRET
+    callbackURL: env.google_callback_URL
   },
   function(accessToken, refreshToken, profile, done) {  //profile contains user-info
     //find a user
