@@ -3,7 +3,7 @@ class ChatEngine{
     constructor(chatBoxId,userEmail){   //Id of chatbox, email of user who's initiating the connection
         this.chatBox=$(`#${chatBoxId}`);
         this.userEmail=userEmail;
-        this.socket=io.connect('http://localhost:5000');    //socket residing via io global variable
+        this.socket=io.connect('http://65.0.89.246:5000');    //socket residing via io global variable
                     //sending to observer to connect
         if(this.userEmail){
             this.connectionHandler();
